@@ -1,0 +1,17 @@
+{
+  "name": "bike-checker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "16.0.3",
+    "node-telegram-bot-api": "0.61.0",
+    "puppeteer": "20.0.0"
+  }
+}
