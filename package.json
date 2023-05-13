@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js CUSTOM_TIME_IN_MINUTES=1"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +12,7 @@
   "dependencies": {
     "dotenv": "16.0.3",
     "node-telegram-bot-api": "0.61.0",
-    "puppeteer": "20.0.0"
+    "puppeteer": "20.0.0",
+    "puppeteer-core": "^20.2.0"
   }
 }
