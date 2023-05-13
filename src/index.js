@@ -1,5 +1,5 @@
-// const puppeteer = require('puppeteer');
-const puppeteer = require('puppeteer-core');
+const axios = require('axios');
+const cheerio = require('cheerio');
 const TelegramBot = require('node-telegram-bot-api');
 require('dotenv').config();
 
@@ -17,32 +17,30 @@ const hour = 60 * minute;
 const TIME = (CUSTOM_TIME_IN_MINUTES * minute) || (2 * hour);
 
 const bot = new TelegramBot(BOT_TOKEN);
+
 async function scrapeWebsite(url, selector, searchText) {
     console.log("------------Start scrape");
-   try {
-       const browser = await puppeteer.launch({
-           executablePath: '/usr/bin/google-chrome',
-           args: ["--no-sandbox", "--disabled-setupid-sandbox"],
-       });
-       const page = await browser.newPage();
-       await page.goto(url);
+    try {
+        const {data} = await axios.get(url);
+        const $ = cheerio.load(data);
+        const element = $(selector);
+        const textContent = element.text();
+        const isAvailableForPurchase = !textContent.includes(searchText);
+        
+        await makeActionAfterScrape(isAvailableForPurchase);
+    } catch (e) {
+        console.error('catch:  ', e)
+    }
+}
 
-
-       const element = await page.$(selector);
-       const textContent = await element.evaluate(node => node.textContent);
-       const isAvailableForPurchase = !textContent.includes(searchText);
-       if (isAvailableForPurchase) {
-           console.log('Try send the message to bot: Urgently buy a bike!!!')
-           await bot.sendMessage(TELEGRAM_CHAT_ID, 'Urgently buy a bike!!!');
-       } else {
-           console.log('Try send the message to bot: Bike no available')
-           await bot.sendMessage(TELEGRAM_CHAT_ID, 'Bike no available');
-       }
-
-       await browser.close();
-   } catch (e) {
-       console.error('catch:  ', e)
-   }
+async function makeActionAfterScrape(isAvailableForPurchase) {
+    if (isAvailableForPurchase) {
+        console.log('Try send the message to bot: Urgently buy a bike!!!')
+        await bot.sendMessage(TELEGRAM_CHAT_ID, 'Urgently buy a bike!!!');
+    } else {
+        console.log('Try send the message to bot: Bike no available')
+        await bot.sendMessage(TELEGRAM_CHAT_ID, 'Bike no available');
+    }
 }
 
 
