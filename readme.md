@@ -1,40 +1,17 @@
-# Web Scraper with Puppeteer and Telegram Bot Integration
+# Bike Availability Checker
 
-This Node.js script checks a `canyon.com` website every 2 hours using Puppeteer.
+This application periodically checks the availability of a specific bike on a website and sends a notification to a specified Telegram chat.
 
-## Prerequisites
+## Environment Variables
 
-- Node.js installed on your machine
-- A Telegram account and a bot created with BotFather
-- A chat ID for the bot to send messages to
+The application uses the following environment variables:
 
-## Installation
-
-1. Clone this repository or download the `index.js` file.
-2. Run `npm install` to install the required dependencies.
-3. Create a `.env` file in the root directory and add the following variables:
-
-```dotenv
-BOT_TOKEN=<your_bot_token>
-TELEGRAM_CHAT_ID=<your_chat_id>
-```
-
-Replace `<your_bot_token>` with the token of your Telegram bot, and `<your_chat_id>` with the chat ID of the user or group where you want to receive the bot messages.
+- `BOT_TOKEN`: The token of your Telegram bot.
+- `TELEGRAM_CHAT_ID`: The ID of the Telegram chat where the bot will send messages.
+- `CUSTOM_TIME_IN_MINUTES`: The interval (in minutes) at which the application checks the website. If not specified, the application will check the website every 2 hours by default.
 
 ## Usage
 
-To start the script, run the command:
+1. Set the environment variables `BOT_TOKEN`, `TELEGRAM_CHAT_ID`, and `CUSTOM_TIME_IN_MINUTES` in a `.env` file or in your environment.
 
-```bash
-npm start
-```
-
-The script will run indefinitely, checking the specified website every 2 hours. If the bike is available for purchase, a message will be sent to the Telegram bot.
-
-You can modify the following constants in the script to customize the behavior:
-
-- `URL`: the URL of the website to check
-- `SELECTOR`: the CSS selector of the element to check
-- `SEARCH_TEXT`: the text to search for in the element
-- `TIME`: the interval between checks, in milliseconds (default: 2 hours)
-
+2. `npm start` Run the application. The application will start checking the website at the specified interval and send a message to the specified Telegram chat when the bike is available for purchase.

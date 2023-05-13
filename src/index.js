@@ -48,7 +48,6 @@ console.log(`Run application with CUSTOM_TIME_IN_MINUTES: ${CUSTOM_TIME_IN_MINUT
 TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID},
 `);
 
-
 scrapeWebsite(URL, SELECTOR, SEARCH_TEXT);
 setInterval(
     () => scrapeWebsite(URL, SELECTOR, SEARCH_TEXT),
